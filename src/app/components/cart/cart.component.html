@@ -1,0 +1,77 @@
+<div class="mx-auto mt-10">
+  <div class="flex shadow-md my-7 justify-center w-full items-center flex-col">
+    <div class="w-3/4 bg-white px-10 py-10">
+      <div class="flex justify-between border-b pb-8">
+        <h1 class="font-semibold text-2xl">Shopping Cart</h1>
+        <h2 class="font-semibold text-2xl">{{ cartItems.length }} Items</h2>
+      </div>
+      <div class="flex mt-10 mb-5">
+        <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/5">
+          Product Details
+        </h3>
+        <h3
+          class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5"
+        >
+          Quantity
+        </h3>
+        <h3
+          class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5"
+        >
+          Price
+        </h3>
+        <h3
+          class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5"
+        >
+        </h3>
+      </div>
+      <div
+        *ngFor="let item of cartItems"
+        class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5"
+      >
+        <div class="flex w-2/5">
+          <div class="w-20">
+            <img
+              class="h-24"
+              [src]="item.product.image"
+              alt="{{ item.product.title }}"
+            />
+          </div>
+          <div class="flex flex-col justify-between ml-4 flex-grow">
+            <span class="font-bold text-sm">{{ item.product.title }}</span>
+            <span class="text-red-500 text-xs">{{
+              item.product.category
+            }}</span>
+            <a
+              href="#"
+              class="font-semibold hover:text-red-500 text-gray-500 text-xs"
+              >Remove</a
+            >
+          </div>
+        </div>
+        <div class="flex justify-center w-1/5">
+          <input
+            class="mx-2 border text-center w-8"
+            type="number"
+            value="{{ item.quantity }}"
+          />
+        </div>
+        <span class="text-center w-1/5 font-semibold text-sm"
+          >${{ item.product.price }}</span
+        >
+        <span
+          class="cursor-pointer text-sm w-1/5 text-center text-red-500"
+          (click)="removeFromCart(item.product.id)"
+          >Remove</span
+        >
+      </div>
+      <div class="flex justify-between items-center mt-6 pt-6 border-t">
+      
+        <div class="flex justify-center items-end">
+          <span class="text-lg font-bold text-gray-500 mr-1">Total :</span>
+          <span class="text-lg font-bold text-gray-800">${{ totalPrice | number:'1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
