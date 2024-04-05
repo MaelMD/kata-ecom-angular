@@ -20,4 +20,12 @@ export class ProductService {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
   
+  searchProducts(query: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}?title_like=${query}`);
+  }
+  
+  filterProducts(category: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/category/${category}`);
+  }
+  
 }

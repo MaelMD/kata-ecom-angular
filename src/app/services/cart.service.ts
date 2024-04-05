@@ -27,6 +27,14 @@ export class CartService {
     return this.cartSubject.asObservable();
   }
 
+  updateItemQuantity(productId: number, quantity: number) {
+    const cartItem = this.cartItems.find(item => item.product.id === productId);
+    if (cartItem) {
+      cartItem.quantity = quantity;
+    }
+    this.cartSubject.next(this.cartItems);
+  }
+
   removeItem(productId: number) {
     this.cartItems = this.cartItems.filter(item => item.product.id !== productId);
     this.cartSubject.next(this.cartItems);

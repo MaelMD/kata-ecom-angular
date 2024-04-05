@@ -1,8 +1,43 @@
-<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-  <div *ngFor="let product of products" class="border p-4 rounded-lg">
-    <img [src]="product.image" alt="{{ product.title }}" class="w-full h-64 object-cover">
-    <h2 class="text-lg font-bold mt-2">{{ product.title }}</h2>
-    <p class="text-gray-800">${{ product.price }}</p>
-    <button class="mt-4 bg-blue-500 text-white py-2 px-4 rounded" (click)="addToCart(product)">Add to Cart</button>
+<div class="container mx-auto mt-4">
+  <div class="mb-6 flex items-center justify-center">
+    <input
+      #searchInput
+      type="text"
+      placeholder="Search products..."
+      class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+      (input)="search(searchInput.value)"
+    />
+
+    <select
+      #categorySelect
+      class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none ml-4"
+      (change)="filter(categorySelect.value)"
+    >
+      <option value="All">All Categories</option>
+      <option value="electronics">Electronics</option>
+      <option value="jewelery">Jewelry</option>
+      <option value="men's clothing">Men's Clothing</option>
+      <option value="women's clothing">Women's Clothing</option>
+    </select>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div *ngFor="let product of filteredProducts" class="card bg-[#182825] shadow-xl my-2 hover:scale-[1.01]">
+      <figure class="bg-white">
+        <img
+          [src]="product.image"
+          alt="{{ product.title }}"
+          class="w-full h-64 object-contain p-3"
+        />
+      </figure>
+      <div class="card-body">
+        <h2 class="card-title text-white">{{ product.title }}</h2>
+        <p class="text-white">${{ product.price }}</p>
+        <div class="card-actions justify-end">
+          <button class="btn bg-[#AFA98D] border-none" (click)="addToCart(product)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+

@@ -1,13 +1,3 @@
-/** @type {import('tailwindcss').Config} */
-// module.exports = {
-//   content: [],
-//   theme: {
-//     extend: {},
-//   },
-//   plugins: [],
-// }
-
-
 
 module.exports = {
   purge: ['./src/**/*.{html,ts,scss}'],
@@ -18,5 +8,7 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require("daisyui")
+  ],
 }

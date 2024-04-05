@@ -1,77 +1,70 @@
-<div class="mx-auto mt-10">
-  <div class="flex shadow-md my-7 justify-center w-full items-center flex-col">
-    <div class="w-3/4 bg-white px-10 py-10">
-      <div class="flex justify-between border-b pb-8">
-        <h1 class="font-semibold text-2xl">Shopping Cart</h1>
-        <h2 class="font-semibold text-2xl">{{ cartItems.length }} Items</h2>
+<section class="py-7 relative">
+    <div class="w-full max-w-7xl px-4 md:px-5 lg:6 mx-auto">
+      <h2 class="title font-manrope font-bold text-4xl leading-10 mb-8 text-center text-black">Shopping Cart</h2>
+      <div class="hidden lg:grid grid-cols-2 py-6">
+        <div class="font-normal text-xl leading-8 text-gray-500">Product</div>
+        <p class="font-normal text-xl leading-8 text-gray-500 flex items-center justify-between">
+          <span class="w-full max-w-[200px] text-center">Delivery Charge</span>
+          <span class="w-full max-w-[260px] text-center">Quantity</span>
+          <span class="w-full max-w-[200px] text-center">Total</span>
+        </p>
       </div>
-      <div class="flex mt-10 mb-5">
-        <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/5">
-          Product Details
-        </h3>
-        <h3
-          class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5"
-        >
-          Quantity
-        </h3>
-        <h3
-          class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5"
-        >
-          Price
-        </h3>
-        <h3
-          class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5"
-        >
-        </h3>
-      </div>
-      <div
-        *ngFor="let item of cartItems"
-        class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5"
-      >
-        <div class="flex w-2/5">
-          <div class="w-20">
-            <img
-              class="h-24"
-              [src]="item.product.image"
-              alt="{{ item.product.title }}"
-            />
+  
+      <div *ngFor="let item of cartItems" class="grid grid-cols-1 lg:grid-cols-2 min-[550px]:gap-6 border-t border-gray-200 py-6">
+        <div class="flex items-center flex-col min-[550px]:flex-row gap-3 min-[550px]:gap-6 w-full max-xl:justify-center max-xl:max-w-xl max-xl:mx-auto">
+          <div class="img-box">
+            <img src="{{ item.product.image }}" alt="{{ item.product.title }}" class="xl:w-[140px]">
           </div>
-          <div class="flex flex-col justify-between ml-4 flex-grow">
-            <span class="font-bold text-sm">{{ item.product.title }}</span>
-            <span class="text-red-500 text-xs">{{
-              item.product.category
-            }}</span>
-            <a
-              href="#"
-              class="font-semibold hover:text-red-500 text-gray-500 text-xs"
-              >Remove</a
-            >
+          <div class="pro-data w-full max-w-sm">
+            <h5 class="font-semibold text-xl leading-8 text-black max-[550px]:text-center">{{ item.product.title }}</h5>
+            <p class="font-normal text-lg leading-8 text-gray-500 my-2 min-[550px]:my-3 max-[550px]:text-center">
+              {{ item.product.category }}
+            </p>
+            <h6 class="font-medium text-lg leading-8 text-indigo-600 max-[550px]:text-center">
+              ${{ item.product.price }}
+            </h6>
           </div>
         </div>
-        <div class="flex justify-center w-1/5">
-          <input
-            class="mx-2 border text-center w-8"
-            type="number"
-            value="{{ item.quantity }}"
-          />
+        <div class="flex items-center lg:flex-row w-full lg:max-w-xl lg:mx-auto gap-2">
+            <h6 class="font-manrope font-bold text-2xl leading-9 text-black w-full text-center">
+                ${{ 15 | number:'1.2-2' }} <span class="text-sm text-gray-300 ml-3 lg:hidden">(Delivery Charge)</span>
+            </h6>
+            <div class="flex items-center w-1/3 mx-auto justify-center">
+                <input type="number" class="form-input rounded-lg bg-gray-300 text-lg p-3 w-full" [(ngModel)]="item.quantity" (change)="updateQuantity(item)">
+            </div>
+            <h6 class="text-indigo-600 font-manrope font-bold text-2xl leading-9 w-full text-center">
+                ${{ item.product.price * item.quantity | number:'1.2-2' }}
+            </h6>
+            <button class="text-red-500 text-sm w-1/5 text-center" (click)="removeFromCart(item.product.id)">
+                Remove
+            </button>
         </div>
-        <span class="text-center w-1/5 font-semibold text-sm"
-          >${{ item.product.price }}</span
-        >
-        <span
-          class="cursor-pointer text-sm w-1/5 text-center text-red-500"
-          (click)="removeFromCart(item.product.id)"
-          >Remove</span
-        >
       </div>
-      <div class="flex justify-between items-center mt-6 pt-6 border-t">
-      
-        <div class="flex justify-center items-end">
-          <span class="text-lg font-bold text-gray-500 mr-1">Total :</span>
-          <span class="text-lg font-bold text-gray-800">${{ totalPrice | number:'1.2-2' }}</span>
+      <div class="bg-gray-50 rounded-xl p-6 w-full mb-8 max-lg:max-w-xl max-lg:mx-auto">
+        <div class="flex items-center justify-between w-full mb-6">
+          <p class="font-normal text-xl leading-8 text-gray-400">Sub Total</p>
+          <h6 class="font-semibold text-xl leading-8 text-gray-900">${{ totalPrice | number : "1.2-2" }}</h6>
         </div>
+        <div class="flex items-center justify-between w-full pb-6 border-b border-gray-200">
+          <p class="font-normal text-xl leading-8 text-gray-400">Delivery Charge</p>
+          <h6 class="font-semibold text-xl leading-8 text-gray-900">${{ cartItems.length * 15 }}</h6>
+        </div>
+        <div class="flex items-center justify-between w-full py-6">
+          <p class="font-manrope font-medium text-2xl leading-9 text-gray-900">Total</p>
+          <h6 class="font-manrope font-medium text-2xl leading-9 text-indigo-500">${{ (totalPrice + cartItems.length * 15) | number : "1.2-2" }}</h6>
+        </div>
+      </div>
+
+      <div class="flex items-center flex-col sm:flex-row justify-center gap-3 mt-8">
+
+        <button class="rounded-full py-4 w-full max-w-[280px] flex items-center bg-indigo-50 justify-center transition-all duration-500 hover:bg-indigo-100">
+          <span class="px-2 font-semibold text-lg leading-8 text-indigo-600">Add Coupon Code</span>
+        </button>
+
+        <button class="rounded-full w-full max-w-[280px] py-4 text-center justify-center items-center bg-indigo-600 font-semibold text-lg text-white flex transition-all duration-500 hover:bg-indigo-700" routerLink="/checkout">
+          Continue to Payment
+        </button>
       </div>
     </div>
-    
-  </div>
-</div>
+  </section>
+  
